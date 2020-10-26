@@ -1,3 +1,17 @@
+body {
+  height: 100%;
+}
+
 h1 {
-  color: orange;
+  color: #ffff;
+  text-align: center;
+}
+
+.container {
+  background: #52539c url("image/bk_day.jpg") no-repeat;
+  background-size: contain;
+  max-height: 800px;
+  min-height: 800px;
+  max-width: 450px;
+  border-radius: 25px;
 }
