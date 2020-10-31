@@ -13,6 +13,11 @@ h6 {
 h1 {
   padding-top: 20px;
   line-height: 45px;
+  margin-bottom: 5px;
+}
+
+h6 {
+  font-size: 13px;
 }
 
 ul {
@@ -47,10 +52,11 @@ li {
 
 .weather-temperature {
   color: #ffff;
-  margin-left: 10px;
+  /* margin-left: 60px; */
+  text-align: center;
 }
 
-.capitalize {
+#description {
   text-transform: capitalize;
 }
 
@@ -65,4 +71,13 @@ li {
   font-size: 16px;
   top: -26px;
   /* margin-left: -10px; */
+}
+
+.col-6 {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.weather-details {
+  text-align: center;
 }
