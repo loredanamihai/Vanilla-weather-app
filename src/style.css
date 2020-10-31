@@ -50,9 +50,10 @@ li {
   margin-left: 10px;
 }
 
-.weather-temperature .description {
-  margin-left: 20px;
+.capitalize {
+  text-transform: capitalize;
 }
+
 .weather-temperature strong {
   font-size: 55px;
   line-height: 1;
@@ -63,5 +64,5 @@ li {
   position: relative;
   font-size: 16px;
   top: -26px;
-  margin-left: -10px;
+  /* margin-left: -10px; */
 }

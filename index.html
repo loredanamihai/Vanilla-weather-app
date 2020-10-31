@@ -9,6 +9,7 @@
     crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/2c26c12b7d.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="src/style.css">
   <title>Weather App</title>
 </head>
@@ -17,8 +18,7 @@
     <div class="weather-app-wrapper">
       <div class="weather-app">
         <div class= "overview">
-          <h1>
-            Bucharest, RO
+          <h1 id="city">
           </h1>
           <h6>
             Tuesday 5 PM
@@ -27,24 +27,25 @@
           <div class="row">
             <div class="col-6">
               <div class="clearfix weather-temperature">
-                <div class="description">                 
-                    Cloudy <i class="fas fa-cloud"></i>
+                <div >
+                  <span class=capitalize id="description">
+                  </span>
+                    <i class="fas fa-cloud"></i>
                 </div>
-                 <strong>
-                   15
+                 <strong id="temperature">
                   </strong>
                 <span class ="unit">
-                  °C | <a href="#">°F</a>
+                   °C | <a href="#">°F</a>
                 </span>                          
               </div>
             </div>
             <div class="col-6">
               <ul>
                 <li>
-                  Humidity: 50%
+                  Humidity: <span id="humidity"></span>%
                 </li>
                 <li>
-                  Wind: 5 km/h
+                  Wind: <span id="wind"></span> km/h
                 </li>
               </ul>
             </div>
