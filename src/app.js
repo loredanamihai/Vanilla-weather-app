@@ -67,14 +67,16 @@ function formatDate(timestamp) {
  
 function displayTemperature(response) {  
   let temperatureElement = document.querySelector("#temperature");
-  let cityElement = document.querySelector("#cityCountry"); 
+  let cityElement = document.querySelector("#city-country"); 
   let descriptionElement = document.querySelector("#description");
   let humidityElement = document.querySelector("#humidity");
   let windElement = document.querySelector("#wind");
   let dateElement = document.querySelector("#date");
   let iconElement = document.querySelector("#icon");
+
+  celsiusTemperature = response.data.main.temp;
   
-  temperatureElement.innerHTML = Math.round(response.data.main.temp);
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
   cityElement.innerHTML = `${response.data.name}, ${response.data.sys.country}`;  
   descriptionElement.innerHTML = response.data.weather[0].description;
   humidityElement.innerHTML = response.data.main.humidity;
@@ -87,10 +89,46 @@ function displayTemperature(response) {
    
 }
 
+function search(city) {
 let apiKey = "89c8092fae86c61da5e71acd50a1415f";
-// let city = "Bucharest";
-// let city = "Los Angeles";
-let city = "Paris";
 let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
 axios.get(apiUrl). then (displayTemperature);
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  search(cityInputElement.value);
+}
+
+function displayFahrenheitTemperature(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
+  celsiusElement.classList.remove("active");
+  fahrenheitElement.classList.add("active");
+  let fahrenheitTemperature = (celsiusTemperature * 1.8) + 32;  
+  temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
+  }
+
+  function displayCelsiusTemperature(event) {
+    event.preventDefault();
+    celsiusElement.classList.add("active");
+    fahrenheitElement.classList.remove("active");
+    let temperatureElement = document.querySelector("#temperature");
+    temperatureElement.innerHTML = Math.round(celsiusTemperature);
+  }
+
+let celsiusTemperature = null;
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
+
+let fahrenheitElement = document.querySelector("#fahrenheit-link");
+fahrenheitElement.addEventListener("click",displayFahrenheitTemperature);
+
+let celsiusElement = document.querySelector("#celsius-link");
+celsiusElement.addEventListener("click",displayCelsiusTemperature);
+
+
+search("Bucharest");
