@@ -1,16 +1,10 @@
 function formatDate(timestamp) {
   let date = new Date(timestamp);
   let hours = date.getHours();
-  let minutes = date.getMinutes();
+  let background = document.querySelector(".weather-app");
+    
   let year = date.getFullYear();
   year = year.toString().substr(-2);
-
-  if (hours < 10) {
-    hours = `0${hours}`;
-  }
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
 
   let days = [
   "Sunday",
@@ -40,7 +34,30 @@ function formatDate(timestamp) {
   let day =days[ date.getDay()];
   let month = months[date.getMonth()];
 
-  return `${day} | ${month} ${year} | ${hours}:${minutes}`;
+if ((hours > 6) && (hours <19)) {
+    background.className+=" day";    
+  }
+  else{
+    background.className+=" night";    
+  }
+  
+  return `${day} | ${month} ${year} | ${formatHours(timestamp)}`;
+  
+}
+
+function formatHours(timestamp) {
+  let date = new Date(timestamp);
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  return `${hours}:${minutes}`;
 }
 
   let iconDescription = [
@@ -89,11 +106,37 @@ function displayTemperature(response) {
    
 }
 
-function search(city) {
-let apiKey = "89c8092fae86c61da5e71acd50a1415f";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+function displayForecast(response) {
+  let forecastElement = document.querySelector("#forecast");
+  forecastElement.innerHTML = null;
+  let forecast = null;
+ 
+  for (let index = 0; index < 6; index++) {
+    let forecast = response.data.list[index];
+    forecastElement.innerHTML += `
+    <div class = "col-2 center-icon">
+      <h3>${formatHours(forecast.dt * 1000)}</h3>
+      <i class="${iconDescription[0][forecast.weather[0].icon]}"></i>
+      <div class = "weather-forecast-temperature">
+        <strong>
+          <span class="temperature-below">
+          ${Math.round(forecast.main.temp_max)}</span>°
+        </strong> 
+        <span class="temperature-below">
+        ${Math.round(forecast.main.temp_min)}</span>°
+      </div>
+    </div>`
+  }
+}
 
-axios.get(apiUrl). then (displayTemperature);
+function search(city) {
+  let apiKey = "89c8092fae86c61da5e71acd50a1415f";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+  axios.get(apiUrl). then(displayTemperature);
+
+  let apiUrl5Days = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl5Days). then(displayForecast);
 }
 
 function handleSubmit(event) {
@@ -104,19 +147,30 @@ function handleSubmit(event) {
 
 function displayFahrenheitTemperature(event) {
   event.preventDefault();
-  let temperatureElement = document.querySelector("#temperature");
+  if(!fahrenheitElement.classList.contains("active")){
+  let temperatureElements = document.querySelectorAll(".temperature-below");
+  temperatureElements.forEach(function(element){
+    let degrees = parseInt(element.innerHTML);
+    let fahrenheitTemperature = (degrees * 1.8) + 32;  
+    element.innerHTML = Math.round(fahrenheitTemperature);
+  });
   celsiusElement.classList.remove("active");
-  fahrenheitElement.classList.add("active");
-  let fahrenheitTemperature = (celsiusTemperature * 1.8) + 32;  
-  temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
+  fahrenheitElement.classList.add("active"); 
+}
   }
 
-  function displayCelsiusTemperature(event) {
+   function displayCelsiusTemperature(event) {
     event.preventDefault();
+    if(!celsiusElement.classList.contains("active")){
     celsiusElement.classList.add("active");
     fahrenheitElement.classList.remove("active");
-    let temperatureElement = document.querySelector("#temperature");
-    temperatureElement.innerHTML = Math.round(celsiusTemperature);
+    let temperatureElements = document.querySelectorAll(".temperature-below");
+    temperatureElements.forEach(function(element){
+    let degrees = parseInt(element.innerHTML);
+    let celsiusTemperature = (degrees - 32) / 1.8;  
+    element.innerHTML = Math.round(celsiusTemperature);    
+  }); 
+}   
   }
 
 let celsiusTemperature = null;

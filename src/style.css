@@ -38,11 +38,19 @@ li {
 }
 
 .weather-app {
-  background: #52539c url("image/bk_day.jpg") no-repeat;
-  background-size: contain;
   max-height: 800px;
   min-height: 800px;
   border-radius: 25px;
+}
+
+.day {
+  background: #52539c url("image/bk_day.jpg") no-repeat;
+  background-size: contain;
+}
+
+.night {
+  background: #52539c url("image/bk_night.jpg") no-repeat;
+  background-size: contain;
 }
 
 .change-search {
@@ -106,9 +114,8 @@ li {
 }
 
 .weather-forecast {
-  margin-top: 470px;
+  margin-top: 500px;
   color: #ffff;
-  /* margin-left: 5px; */
 }
 
 .center-icon {
